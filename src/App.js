@@ -3,7 +3,7 @@ import Cards from './components/cards/Cards';
 import Nav from './components/nav/Nav';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Routes, Route, useParams, useNavigate, useLocation } from 'react-router-dom'
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
 import Detail from './components/detail/Detail';
 import About from './components/abaut/About';
 import Favoritos from './components/Favoritos/Favoritos';
@@ -20,11 +20,13 @@ function App() {
 
    function onSearch(id) {
       axios(`${URL_BASE}/${id}?key=${API_KEY}`).then(({ data }) => {
-         if (data.name) {
-            setCharacters((oldChars) => [...oldChars, data]);
-         } else {
-            window.alert('¡No hay personajes con este ID!');
-         }
+         if (characters.find((value) => value.id === data.id)) {
+            alert('El personaje con ese id ya fue agregado');
+          } else if (id === '' || id > 826 || id < 1)  {
+            alert('El personaje con ese id no existe');
+          } else {
+            setCharacters([...characters, data]);
+          }
       });
    }
    const onClose = (id) => {
