@@ -1,45 +1,67 @@
-import { useState } from "react";
-import Validation from "./Validation";
+import React, { useState } from "react";
+import validation from "./validation";
+import { Alert, Button } from "@mui/material";
 
 const Form = ({ login }) => {
+  const [userData, setUserData] = useState({
+    email: "",
+    password: "",
+  });
 
-    const [form, setForm] = useState({
-        email: '',
-        password: ''
-    })
-    const [errors, setErrors] = useState({})
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+  });
 
-    const handleChange = (e) => {
-        const property = e.target.name;
-        const value = e.target.value;
-        setForm({
-            ...form,
-            [property]: value
-        })
+  const handleChange = (event) => {
+    const { name, value } = event.target;
 
-        Validation({ ...form, [property]: value }, errors, setErrors)
-    }
+    setUserData({ ...userData, [name]: value });
+    validation({ ...userData, [name]: value }, errors, setErrors);
+  };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        login(form);
-    }
+  const submitHandler = (event) => {
+    event.preventDefault();
+    login(userData);
+  };
 
-    return (
-        <div className="login-page">
-            <div className="form">
-                <h1 className="title-form">Rick And Morty App</h1>
-                <form onSubmit={handleSubmit} o className="register-form">
-                    <input placeholder="username" className="formInput" type="text" name="email" value={form.email} onChange={handleChange} autoComplete='off' />
-                    {errors.email && <p className="error">{errors.email}</p>}
-                    <input placeholder="password" className="formInput" type="password" name="password" value={form.password} onChange={handleChange} />
-                    {errors.password && <p className="error">{errors.password}</p>}
-                    <button className="buttonLogin" type="submit">Login</button>
-                </form>
-            </div>
-        </div>
-
-    );
-}
-
-export default Form
+  return (
+    <form onSubmit={submitHandler}>
+      <div>
+        <label  htmlFor="email">
+          USERNAME:
+        </label>
+        <input
+          autoComplete="off"
+          placeholder="email@email.com"
+          type="text"
+          name="email"
+          value={userData.email}
+          onChange={handleChange}
+        />
+        <p>{errors.email}</p>
+      </div>
+      <div>
+        <label  htmlFor="password">
+          PASSWORD:
+        </label>
+        <input
+          placeholder="password123"
+          type="password"
+          name="password"
+          value={userData.password}
+          onChange={handleChange}
+        />
+        <p>{errors.password}</p>
+      </div>
+      <button type="submit">
+        Login
+      </button>
+      <Button variant="outlined" color="success">
+        Success
+      </Button>
+      <Alert severity="warning">This is a warning alert — check it out!</Alert>
+    </form>
+  );
+};
+export default Form;

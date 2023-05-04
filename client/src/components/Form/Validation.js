@@ -1,33 +1,27 @@
-const Validation = (form, errors, setErrors) => {
+const validation = (userData, errors, setErrors) => {
     const newErrors = {...errors}
-    const EMAIL = 'franpuy6@gmail.com';
-    const PASSWORD = 'franpuy123';
-
-    if (!form.email) {
+  
+    if (!userData.email) {
       newErrors.email = "Se requiere email";
-    } else if (!/^[^\s@]+@[^\s@]+.[^\s@]+$/.test(form.email)) { 
+    } else if (!/^[^\s@]+@[^\s@]+.[^\s@]+$/.test(userData.email)) { 
         newErrors.email = "Formato invalido";
-    } else if (form.email.length > 35) { 
-        newErrors.email = "Email nombre de usurio no puede tener mas de 35";
-    } else if (form.email !== EMAIL) {
-        newErrors.email = "Email incorrecto"
+    } else if (userData.email.length > 35) { 
+        newErrors.email = "Email nombre de usurio no puede tener mas de 35 caracteres";
     } else {
-        newErrors.email = ""
+        newErrors.email = "";
     }
-
-    if (!form.password) {
+  
+    if (!userData.password) {
       newErrors.password = "Ingrese contraseña"
-    } else if (!/\d/.test(form.password)) {
+    } else if (!/\d/.test(userData.password)) {
         newErrors.password = "la contraseña tiene que tener al menos un número"
-    } else if (form.password.length < 5 || form.password.length > 11 ) {
+    } else if (userData.password.length < 5 || userData.password.length > 11 ) {
         newErrors.password = "La contraseña tiene que tener una longitud entre 6 y 10 caracteres"
-    } else if (form.password !== PASSWORD) {
-        newErrors.password = "Contraseña incorrecta"
     } else { 
         newErrors.password = ""
     }
-
+  
     setErrors(newErrors)
   };
-
-export default Validation
+  
+  export default validation

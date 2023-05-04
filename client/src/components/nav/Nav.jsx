@@ -1,17 +1,52 @@
 import SearchBar from "../searchBar/SearchBar";
-import { Link } from "react-router-dom";
-const Nav = ({ onSearch, logout }) =>{
-   
-        return(
-                <nav>
-                 <SearchBar onSearch={onSearch}/>
-                 <button><Link to="/home">Home</Link></button>
-                 <button><Link to="/about">About</Link></button>
-                 <button><Link to="/Favoritos">Favoritos</Link></button>
-                 <button onClick={logout}>salida</button>
-                </nav>
-                
-         )
-}
+import { NavLink } from "react-router-dom";
+import generarNumeroAleatorio from "../Random";
+
+const Nav = ({ onSearch, logOut }) => {
+  return (
+    <nav>
+
+      <h1>RICK AND MORTY</h1>
+
+      <SearchBar onSearch={onSearch} />
+
+      <button
+        onClick={() => {
+          onSearch(generarNumeroAleatorio());
+        }}
+      >
+        Random
+      </button>
+
+      <button >
+        <NavLink to="/home">
+          Home
+        </NavLink>
+      </button>
+
+      <button >
+        <NavLink to="/about">
+          About
+        </NavLink>
+      </button>
+
+      <button >
+        <NavLink to="/favorites">
+          Favorites
+        </NavLink>
+      </button>
+
+      <button >
+        <NavLink
+          
+          to="/"
+          onClick={logOut}
+        >
+          Log out
+        </NavLink>
+      </button>
+    </nav>
+  );
+};
 
 export default Nav;
